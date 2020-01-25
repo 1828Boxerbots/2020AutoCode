@@ -25,3 +25,20 @@ double Util::Limit(double value, double lower, double upper)
 
     return value;
 }
+void Util::DelayInSeconds(double seconds)
+{
+     frc::Timer timer;
+    //starts timer and gets start time and beginning current time
+    timer.Start();
+    double startTime = timer.Get();
+    double currentTime = timer.Get();
+    //Keep looping until end time is reached
+    while(currentTime - startTime < seconds)
+    {
+        //Gets current time and sends it to the smartdashboard for checking
+        currentTime = timer.Get();
+    }
+    //Stops and resets timer used for driving forward
+    timer.Stop();
+    timer.Reset();
+}

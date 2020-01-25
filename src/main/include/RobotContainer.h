@@ -35,13 +35,13 @@ class RobotContainer {
   // The robot's subsystems and commands are defined here...
   DriveTrain m_driveTrain;
   DriveTrainCMD m_driveTrainCMD;
-  frc2::SequentialCommandGroup m_driveAutonomous = frc2::SequentialCommandGroup
+  frc2::SequentialCommandGroup m_driveAutonomousOne = frc2::SequentialCommandGroup
   {
     frc2::InstantCommand([this] {m_driveTrain.Init();}, {&m_driveTrain}),
     frc2::InstantCommand([this] { m_driveTrain.ForwardInSec(3);}, {&m_driveTrain}),
     frc2::InstantCommand([this] { m_driveTrain.TurnInDegrees(45);}, {&m_driveTrain}),
     frc2::InstantCommand([this] { m_driveTrain.ForwardInSec(3);}, {&m_driveTrain}),
-    frc2::InstantCommand([this] { m_driveTrain.TurnInDegrees(45);}, {&m_driveTrain}),
+    frc2::InstantCommand([this] { m_driveTrain.TurnInDegrees(90);}, {&m_driveTrain}),
     frc2::InstantCommand([this] { m_driveTrain.ForwardInSec(2);}, {&m_driveTrain}),
     frc2::InstantCommand([this] { m_driveTrain.TurnInDegrees(45);}, {&m_driveTrain}),
     frc2::InstantCommand([this] { m_driveTrain.ForwardInSec(3);}, {&m_driveTrain}),
@@ -51,5 +51,6 @@ class RobotContainer {
     frc2::InstantCommand([this] { m_driveTrain.ForwardInSec(5);}, {&m_driveTrain}),
     frc2::InstantCommand([this] { m_driveTrain.Stop();}, {&m_driveTrain})
     };
+  frc2::SequentialCommandGroup m_driveAutonomous;
   void ConfigureButtonBindings();
 };

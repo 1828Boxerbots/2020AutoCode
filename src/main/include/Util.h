@@ -7,7 +7,10 @@
 
 #pragma once
 
+#include <frc/Timer.h>
+
 namespace Util
 {
-  double Limit(double value, double lower = -1.0, double upper = 1.0);
+  double Limit(double value, double lower = -.5, double upper = .5);
+  void DelayInSeconds(double seconds);
 }

@@ -16,8 +16,8 @@
  * command-specific namespaces within this header, which can then be used where
  * they are needed.
  */
-constexpr int PWM_LEFTMOTOR = 0;
-constexpr int PWM_RIGHTMOTOR = 1;
+constexpr int PWM_LEFTMOTOR = 6;
+constexpr int PWM_RIGHTMOTOR = 2;
 constexpr int PWM_SHOOTER = 5;
 constexpr int PWM_TURRET_ROTATION = 4;
 constexpr int PWM_PICKUP = 9;

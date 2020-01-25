@@ -12,9 +12,10 @@ DriveTrain::DriveTrain() {}
 
 void DriveTrain::Init()
 {
-    m_leftMotor.SetInverted(true);
-    m_rightMotor.SetInverted(false);
+    m_leftMotor.SetInverted(false);
+    m_rightMotor.SetInverted(true);
     m_gyro.Calibrate();
+    m_gyro.Reset();
 }
 
 //Motors Move
@@ -58,6 +59,7 @@ void DriveTrain::TurnLeft(double speed)
 
 void DriveTrain::ForwardInSec(double time)
 {
+    frc::SmartDashboard::PutNumber("Time", time);
     //Checking if time is invalid
     if(time < 0.0)
     {
@@ -67,43 +69,41 @@ void DriveTrain::ForwardInSec(double time)
 
     //Start Moving
     Forward();
-
-    //Use FRC timer to get current time
-    frc::Timer timer;
-    double startTime = timer.Get();
-    double currentTime = timer.Get();
-
-    //Keep looping until end time is reached
-    while(currentTime - startTime < time)
-    {
-        currentTime = timer.Get();
-    }
-
+    frc::SmartDashboard::PutNumber("Start Time", -1);
+    Util::DelayInSeconds(time);
     //Stop moving
     Stop();
+     frc::SmartDashboard::PutNumber("End Time", -610);
 }
 //function used to make the robot turn in a relative angle
 void DriveTrain::TurnInDegrees(double relativeAngle)
 {
-    m_gyro.Reset();
-    m_gyro.GetAngle();
     //displays to smartdashboard to check angle
-    frc::SmartDashboard::PutNumber("Current Angle", m_gyro.GetAngle());
+    double startAngle = m_gyro.GetAngle();
+    frc::SmartDashboard::PutNumber("Start Angle", startAngle);
+    frc::SmartDashboard::PutNumber("Relative Angle", relativeAngle);
     //statements meant for determining if angle is negative or positive
     if(relativeAngle > 0)
     {
-     while(relativeAngle < m_gyro.GetAngle())   
-     {
-         TurnRight();
-     }
-    }
-    if(relativeAngle < 0)
-    {
-        while(relativeAngle > m_gyro.GetAngle())
+        frc::SmartDashboard::PutString("Turning", "Right");
+        TurnRight();
+        frc::SmartDashboard::PutNumber("Current Angle Right", m_gyro.GetAngle());
+        while(relativeAngle > m_gyro.GetAngle() - startAngle)   
         {
-            TurnLeft();
+            frc::SmartDashboard::PutNumber("Current Angle Right", m_gyro.GetAngle());
         }
     }
+    else
+    {
+        frc::SmartDashboard::PutString("Turning", "Left");
+       TurnLeft();
+        frc::SmartDashboard::PutNumber("Current Angle Right", m_gyro.GetAngle());
+        while(relativeAngle < m_gyro.GetAngle() - startAngle)
+        {
+            frc::SmartDashboard::PutNumber("Current Angle Left", m_gyro.GetAngle());
+        }
+    }
+    frc::SmartDashboard::PutNumber("End Angle", 555);
     Stop();
 }
 
